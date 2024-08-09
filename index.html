@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess The Number</title>
+
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bona+Nova+SC:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <style>
+           *{
+    margin:0px;
+    padding:0px;
+    font-family:"Bona Nova SC", serif;
+}
+
+body{
+   background-color: rgb(116, 34, 6);
+} 
+
+#numberbox{
+    height: 200px;
+    width: 300px;
+    margin: 0px 400px 0px 0px;
+    background-color: black;
+    box-sizing: border-box;
+    border: 5px solid rgb(199, 198, 198);
+    outline: 2px solid rgb(101, 102, 111);
+    position: relative;
+    border-radius: 20px;
+    transition: 500ms linear;
+    animation-name: none;
+    animation-duration: 0ms;
+    animation-iteration-count: 1;
+    animation-play-state: running;
+    animation-duration: 800ms;
+    box-shadow: 10px 10px 10px black, 2px 2px 5px inset black;
+}
+
+#numberbox2{
+   position: absolute;
+   color: black;
+   padding: 50px;
+   background-color: rgb(249, 150, 1);
+   box-sizing: border-box;
+   border: 1px solid white;
+   box-shadow: 10px 10px 10px black inset;
+   z-index: -1;
+   height: 200px;
+   width: 300px;
+   border-radius:20px;
+   font-size: 90px;
+   text-align: center;
+   box-sizing: border-box;
+   
+}
+
+.numbercontainer{
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    height: fit-content;
+    width: 100%;
+    margin: 200px 0px 0px 0px;
+    
+}
+
+@keyframes shaking{
+    0%  {transform: rotate(0deg);}
+    10% {transform: rotate(50deg);}
+    20% {transform: rotate(0deg);}
+    30% {transform: rotate(-50deg);}
+    40% {transform: rotate(0deg);}
+    50% {transform: rotate(50deg);}
+    60% {transform: rotate(0deg);}
+    70% {transform: rotate(-50deg);}
+    80% {transform: rotate(0deg);}
+    90% {transform: rotate(50deg);}
+    100%{transform: rotate(0deg);}
+}
+
+
+#heading{
+   font-weight: lighter;
+   font-size: 70px;
+   width: 100vw;
+   text-align: center;
+   top:100px;
+   position: absolute;
+   color: white;
+}
+
+button{
+    color: black;
+    background-color: rgb(244, 244, 244);
+    border-radius: 10px;
+    height: 50px;
+    width: 150px;
+    font-size: 35px;
+    box-sizing: border-box;
+    border: 3px solid rgb(0, 0, 0);
+    box-shadow: 10px 10px 20px black;
+    background-image: url(imag );
+}
+
+button:hover{
+    background-color: blue;
+}
+
+.buttonstrip{
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    top:460px;
+    text-decoration: none;
+}
+
+
+
+#inputstrip{
+    width: 100vw;
+    height: fit-content;
+    position: absolute;
+    bottom: 100px;
+    display: flex;
+    justify-content: center;
+}
+
+input{
+    height: 35px;
+    width: 300px;
+    text-align: center;
+    font-size: 40px;
+    color:black;
+    display: none;
+    border-radius: 10px;
+    border: 1px solid black;
+    box-shadow: 5px 5px 2px black inset;
+}
+
+
+
+#scoreboard{
+
+    height: fit-content;
+    width: 100vw;
+    position: absolute;
+    display: flex;
+    justify-content: space-evenly;
+    margin: 650px 0px 0px 0px ;
+    gap: 50px;
+    color: white;
+}
+
+
+#score{
+    font-size: 30px;
+    text-shadow: 5px 5px 5px black;
+}
+#movleft{
+    font-size: 30px;
+    text-shadow: 5px 5px 5px black;
+}
+
+    </style>
+
+
+</head>
+
+<body>
+
+    <a id="promotion">
+    <h1 id="heading">Guess The Number</h1>
+    </a>
+   
+    <div class="numbercontainer">
+
+    <video id="numberbox" src="">
+    </video>
+
+    <div id="numberbox2">
+        ?
+    </div>
+    </div>
+
+    
+    <div class="buttonstrip" >
+    <button  class="button"  id="button">Start</button>
+    </div>
+
+
+
+    <div id="inputstrip">
+          <input type="number" placeholder="Enter here" > 
+         
+    </div>
+
+    <div id="scoreboard">
+    <h1 id="movleft">MOVES:</h1>
+    <h2 id="score">SCORE:</h2>
+    </div>
+
+
+<script> 
+        const btn=document.querySelector("button");
+const heading=document.querySelector("h1");
+const numberbox=document.querySelector("#numberbox");
+const numberbox2=document.querySelector("#numberbox2");
+const inpt=document.querySelector("input");
+const promotion=document.querySelector("#promotion");
+const movleft=document.querySelector("#movleft");
+const marks=document.querySelector("#score");
+let clicked=0;
+let score=0;
+let moves;
+let arr=[2,3];
+let num=0;
+let i=0;
+
+
+
+
+function compare(e){
+    if(e.key=="Enter"){
+      numberbox.style.margin="0px 600px 0px 0px";
+      inpt.disabled="True";
+      if(inpt.value==num){
+        heading.textContent="RIGHT";
+        numberbox.src="elvishclip.mp4";
+        numberbox.play();
+        numberbox.style.backgroundImage="none";
+    
+        score++;
+        marks.textContent="score: "+score;
+      }
+      else{
+          heading.textContent="WRONG";
+          numberbox.src="duckhuntclip.mp4";
+          numberbox.play();
+      }
+    }  
+    btn.textContent="Next";
+  }
+
+
+
+function start01(){
+
+    numberbox.style.margin="0px";
+    numberbox.src="none";
+    movleft.textContent="moves left: "+moves;
+    marks.textContent="score: "+score;
+
+    setTimeout(()=>{
+    numberbox.style.animationName="shaking";  
+    num=Math.floor((Math.random()*101))+1;
+    i=Math.floor(Math.random()*2);
+    heading.textContent=`hint: the number belongs to the range ${num-arr[i]} and ${num+arr[i]} `;
+    heading.style.color="white";
+    heading.style.fontSize="40px";
+    numberbox2.textContent=num;
+    inpt.style.display="block";
+    inpt.disabled="";
+    }, 550)
+
+    numberbox.style.animationName="none";  
+    inpt.addEventListener("keypress", compare);
+}
+
+
+ function start(){
+  if(clicked<3){
+    clicked++;
+    moves=3-clicked;
+   
+    start01();
+  }
+  else{
+        if(score>=2){
+          heading.textContent="Congrats You Won🥳";
+          heading.style.fontSize="50px";
+          heading.style.color="white";
+          document.body.style.backgroundColor="green";
+          promotion.href="https://www.youtube.com/@KARTZ_STORIES2328";
+          heading.style.textDecoration="underline";
+          btn.style.backgroundColor="red";
+          numberbox.src="won.mp4";
+          numberbox.play();
+        }
+        else{
+          heading.textContent="sorry you lost 🥺";
+          heading.style.color="blue";
+          heading.style.textDecoration="underline";
+          heading.style.fontSize="50px";
+          numberbox.src="lost.mp4";
+          numberbox.play();
+          promotion.href="https://www.youtube.com/@KARTZ_STORIES2328";
+          btn.style.backgroundColor="red";
+        }
+     }
+}
+
+btn.addEventListener("click",start);
+
+</script>
+    
+</body>
+</html>
